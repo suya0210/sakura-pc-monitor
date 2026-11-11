@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sakura PC Hardware Monitor</title>
+    <link rel="manifest" href="/frontend/manifest.json">
+    <link rel="stylesheet" href="/frontend/style.css">
+    <meta name="theme-color" content="#ffb7c5">
+</head>
+<body>
+    <div class="sakura-bg-glow"></div>
+    
+    <!-- Header -->
+    <header class="glass-card header-bar">
+        <div class="header-left">
+            <span class="logo-icon">🌸</span>
+            <div>
+                <h1 class="logo-title">Sakura Monitor</h1>
+                <span id="pc-name" class="pc-badge">Connecting...</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div id="digital-clock" class="clock-display">00:00:00</div>
+            <button id="wake-lock-btn" class="btn-wake">⚡ Keep On: OFF</button>
+            <div id="connection-status" class="status-badge status-connecting">CONNECTING</div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-container">
+        <!-- ROW 1: CORE HARDWARE (3 Columns Berjejer) -->
+        <section class="card-row row-3col">
+            <!-- CPU Panel -->
+            <div class="glass-card monitor-card">
+                <div class="card-header">
+                    <h3>⚙️ CPU</h3>
+                    <span id="cpu-usage" class="card-value">0%</span>
+                </div>
+                <div id="cpu-model" class="card-subtitle">Loading CPU...</div>
+                <div class="progress-container">
+                    <div id="cpu-bar" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-label">Clock</span>
+                        <span class="metric-val"><strong id="cpu-clock">0</strong> GHz</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Cores / Threads</span>
+                        <span class="metric-val"><strong id="cpu-cores">0 / 0</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RAM Panel -->
+            <div class="glass-card monitor-card">
+                <div class="card-header">
+                    <h3>🧠 RAM</h3>
+                    <span id="ram-usage-percent" class="card-value">0%</span>
+                </div>
+                <div id="ram-usage-text" class="card-subtitle">0 GB / 0 GB</div>
+                <div class="progress-container">
+                    <div id="ram-bar" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-label">Terpakai</span>
+                        <span class="metric-val"><strong id="ram-used">0</strong> GB</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Tersedia</span>
+                        <span class="metric-val"><strong id="ram-avail">0</strong> GB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GPU Panel -->
+            <div class="glass-card monitor-card">
+                <div class="card-header">
+                    <h3>🎮 GPU</h3>
+                    <span id="gpu-usage" class="card-value">0%</span>
+                </div>
+                <div id="gpu-name" class="card-subtitle">Loading GPU...</div>
+                <div class="progress-container">
+                    <div id="gpu-bar" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-label">Suhu</span>
+                        <span class="metric-val"><strong id="gpu-temp">0</strong> °C</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">VRAM</span>
+                        <span class="metric-val"><strong id="gpu-vram">0 / 0</strong> GB</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROW 2: ACTIVE SESSION, NETWORK & STORAGE (3 Columns Berjejer) -->
+        <section class="card-row row-3col">
+            <!-- Active Session Panel -->
+            <div class="glass-card monitor-card">
+                <div class="card-header">
+                    <h3>🖥️ Active Session</h3>
+                </div>
+                <div class="session-box">
+                    <div class="session-label">Aplikasi Aktif:</div>
+                    <div id="active-app-name" class="session-title">-</div>
+                    <div class="session-label mt-6">Judul Window:</div>
+                    <div id="active-window-title" class="session-subtext">-</div>
+                </div>
+                <div id="monitor-list" class="monitor-info-list">
+                    <!-- Dynamic monitor info -->
+                </div>
+            </div>
+
+            <!-- Network Panel -->
+            <div class="glass-card monitor-card">
+                <div class="card-header">
+                    <h3>🌐 Network Traffic</h3>
+                </div>
+                <div class="net-grid">
+                    <div class="net-card net-down">
+                        <span class="net-dir">⬇ Download</span>
+                        <span id="net-dl" class="net-speed">0.0 MB/s</span>
+                        <span id="net-total-dl" class="net-total">Total: 0 GB</span>
+                    </div>
+                    <div class="net-card net-up">
+                        <span class="net-dir">⬆ Upload</span>
+                        <span id="net-ul" class="net-speed">0.0 MB/s</span>
+                        <span id="net-total-ul" class="net-total">Total: 0 GB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Panel -->
+            <div class="glass-card monitor-card">
+                <div class="card-header">
+                    <h3>💾 Storage Drives</h3>
+                </div>
+                <div id="storage-list" class="storage-container">
+                    <!-- Dynamic storage items -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ROW 3: TOP PROCESSES (Full Width Panel) -->
+        <section class="card-row">
+            <div class="glass-card monitor-card full-width-card">
+                <div class="card-header">
+                    <h3>📊 Top 5 CPU Processes</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table class="process-table">
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>Nama Proses</th>
+                                <th>Penggunaan CPU</th>
+                                <th>RAM (MB)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="process-list">
+                            <!-- Dynamic process rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-card footer-bar">
+        <span>Sakura PC Hardware Monitor v1.2 • Lightweight PWA</span>
+    </footer>
+
+    <script src="/frontend/app.js"></script>
+</body>
+</html>

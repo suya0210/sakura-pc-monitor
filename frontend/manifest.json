@@ -1,0 +1,21 @@
+{
+  "name": "Sakura PC Hardware Monitor",
+  "short_name": "Sakura Monitor",
+  "description": "Real-time PC Hardware Monitoring Dashboard",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fce4ec",
+  "theme_color": "#ffb7c5",
+  "icons": [
+    {
+      "src": "/frontend/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/frontend/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
